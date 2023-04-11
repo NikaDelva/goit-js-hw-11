@@ -1,2 +1,70 @@
 @import './common';
 @import './example';
+
+.container {
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    background-color: #bb7ce0;
+    box-shadow: 0px 3px 6px rgba(46, 47, 66, 0.08), 0px 3px 6px rgba(46, 47, 66, 0.16), 0px 3px 6px rgba(46, 47, 66, 0.08);
+    margin-bottom: 40px;
+}
+
+.text-input {
+    width: 300px;
+    padding: 8px;
+    border-radius: 5%;
+    border-color: azure;
+    border-bottom: #5c5555;
+}
+
+.gallery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 80px 20px;
+    
+}
+
+.photo-card {
+
+}
+
+.images {
+    width: 450px;
+    height: 300px;
+    border-radius: 5%;
+    object-fit: cover;
+}
+
+
+.search-btn,
+.load-more {
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: #eae0eb;
+    color: #080808;
+    border: none;
+    border-radius: 10%;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.button-load {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+
+.load-more.is-hidden {
+    display: none;
+}
+
+.info {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+}
