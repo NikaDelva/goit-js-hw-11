@@ -14,8 +14,14 @@ const newFetchPhotos = new fetchImages();
 refs.buttonLoadMoreEl.classList.add('is-hidden');
 console.log(newFetchPhotos);
 
-function renderGalleryImages(imagesArr) {
-    const galleryMarkup = imagesArr.map(
+function renderGalleryImages(markup) {
+    refs.galleryEl.insertAdjacentHTML('beforeend', markup);
+    lightbox.refresh();
+
+}
+
+function createGallery(imagesArr) {
+    return imagesArr.map(
         ({ webformatURL, largeImageURL, tags, likes, views, comments, downloads } = {}) =>
             `<div class="photo-card">
                 <a href="${largeImageURL}" class="image-link">
@@ -36,10 +42,6 @@ function renderGalleryImages(imagesArr) {
                     </p>
                 </div>
             </div>`).join('');
-    console.log(galleryMarkup);
-    refs.galleryEl.insertAdjacentHTML('beforeend', galleryMarkup);
-    lightbox.refresh();
-
 }
 
 async function onFormSubmit(event) {
@@ -59,14 +61,14 @@ async function onFormSubmit(event) {
         }
         if (data.totalHits <= fetchImages.per_page) {
             refs.galleryEl.innerHTML = '';
-            renderGalleryImages(data.hits);
+            renderGalleryImages(createGallery(data.hits));
             refs.buttonLoadMoreEl.classList.add('is-hidden');
             Notify.info(`We're sorry, but you've reached the end of search results.`);
             return
         }
             refs.galleryEl.innerHTML = '';
             Notify.success(`Hooray! We found ${data.totalHits} images.`)
-            renderGalleryImages(data.hits);
+            renderGalleryImages(createGallery(data.hits));
             refs.buttonLoadMoreEl.classList.remove('is-hidden');
         if (fetchImages.page === fetchImages.totalHits) {
             refs.buttonLoadMoreEl.classList.add('is-hidden');
@@ -81,7 +83,7 @@ async function onUploadMore(event) {
     try {
     const response = await fetchImages.fetchPhotosByQuery()
     .then(({data}) => {
-    renderGalleryImages(data.hits);
+    renderGalleryImages(createGallery(data.hits));
     refs.buttonLoadMoreEl.classList.remove('is-hidden'); 
     })  
     } catch (error) {
