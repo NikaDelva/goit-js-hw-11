@@ -1,4 +1,4 @@
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { fetchImages } from './imagesApi';
@@ -50,8 +50,9 @@ async function onFormSubmit(event) {
     try {
         const response = await fetchImages.fetchPhotosByQuery();
         const { data } = response;
+        console.log(data)
         if (data.total === 0) {
-            Notiflix.Notify.failure(`Sorry, there are no images matching your search query. Please, try again`)
+            Notify.failure(`Sorry, there are no images matching your search query. Please, try again`)
             refs.galleryEl.innerHTML = '';
             refs.buttonLoadMoreEl.classList.add('is-hidden');
             return
@@ -60,11 +61,11 @@ async function onFormSubmit(event) {
             refs.galleryEl.innerHTML = '';
             renderGalleryImages(data.hits);
             refs.buttonLoadMoreEl.classList.add('is-hidden');
-            Notiflix.Notify.info(`We're sorry, but you've reached the end of search results.`);
+            Notify.info(`We're sorry, but you've reached the end of search results.`);
             return
         }
             refs.galleryEl.innerHTML = '';
-            Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`)
+            Notify.success(`Hooray! We found ${data.totalHits} images.`)
             renderGalleryImages(data.hits);
             refs.buttonLoadMoreEl.classList.remove('is-hidden');
         if (fetchImages.page === fetchImages.totalHits) {
@@ -80,7 +81,7 @@ async function onUploadMore(event) {
     try {
     const response = await fetchImages.fetchPhotosByQuery()
     .then(({data}) => {
-    refs.galleryEl.insertAdjacentHTML('beforeend', renderGalleryImages(data.hits));
+    renderGalleryImages(data.hits);
     refs.buttonLoadMoreEl.classList.remove('is-hidden'); 
     })  
     } catch (error) {

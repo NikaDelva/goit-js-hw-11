@@ -17,6 +17,8 @@ export class fetchImages {
             orientation: 'horizontal',
             safesearch: true,
         })
-      return axios.get(`${fetchImages.URL}?${params}`);
-    }
+        return axios.get(`${fetchImages.URL}?${params}`)
+            .catch(function (error) {
+                console.log(error.response.data);
+            });
 }    
